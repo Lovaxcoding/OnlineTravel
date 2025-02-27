@@ -24,9 +24,9 @@
 - **Axios** (Requêtes HTTP pour la communication avec le backend)
 
 ### Backend :
-- **Node.js & Express.js** (Serveur backend et API REST)
-- **MongoDB** (Base de données NoSQL pour stocker les réservations et utilisateurs)
-- **Mongoose** (ORM pour interagir avec MongoDB)
+- **Node.js & Springboot** (Serveur backend et API REST)
+- **JPA et Hibernate** (Base de données MySQL pour stocker les réservations et utilisateurs)
+- **RESTAPI** (ORM pour interagir avecles répositories)
 - **JWT (JSON Web Token)** (Authentification et sécurisation des utilisateurs)
 - **bcrypt.js** (Hachage des mots de passe pour la sécurité)
 
@@ -39,7 +39,7 @@
 ## Installation et Exécution
 ### Prérequis :
 - **Node.js** installé
-- **MongoDB** installé ou une base de données en ligne (MongoDB Atlas)
+- **Mysql** installé ou une base de données en ligne (MongoDB Atlas)
 
 ### Installation :
 #### 1. Cloner le dépôt :
