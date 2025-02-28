@@ -1,16 +1,18 @@
 import {Box, Typography, TextField, Button, IconButton, Link} from "@mui/material";
 import { Instagram, WhatsApp, YouTube, Telegram, Twitter } from "@mui/icons-material";
 import Grid from '@mui/material/Grid2';
+import SignupSection from "./SignupSection.jsx";
 
 export default function Footer() {
     return (
-        <Box sx={{ backgroundColor: "#0A0A0A", color: "white", py: 6, px: { xs: 2, md: 6 } }}>
+        <Box sx={{ height: "auto", backgroundColor: "#0A0A0A", color: "white", py: 6, px: { xs: 2, md: 6 } }}>
+            <SignupSection />
             <Grid container spacing={4}>
                 {/* Section Logo et Description */}
                 <Grid item xs={12} md={4}>
-                    <Typography variant="h6" fontWeight="bold">TRAVEL</Typography>
+                    <Typography variant="h6" fontWeight="bold">Online <span>TRAVEL</span></Typography>
                     <Typography variant="body2" sx={{ mt: 2 }}>
-                        We aim to provide modern explorers with innovative, functional, and stylish bags that enhance every journey.
+                        Nous visons à offrir aux explorateurs modernes des sacs innovants, fonctionnels et élégants qui enrichissent chaque voyage.
                     </Typography>
                 </Grid>
 
@@ -35,7 +37,7 @@ export default function Footer() {
                 {/* Section Newsletter */}
                 <Grid item xs={12} md={4}>
                     <Typography variant="subtitle1" fontWeight="bold">Get Updates</Typography>
-                    <Box sx={{ display: "flex", mt: 2 }}>
+                    <Box sx={{ display: "flex", position : "relative", mt: 2 }}>
                         <TextField placeholder="Enter Your Email" variant="outlined" size="small" sx={{ bgcolor: "white", flex: 1, borderRadius: 1 }} />
                         <Button variant="contained" sx={{ ml: 1, bgcolor: "#ffffff", color: "black" }}>Subscribe</Button>
                     </Box>
@@ -52,7 +54,7 @@ export default function Footer() {
 
             {/* Footer Bas */}
             <Box sx={{ mt: 4, textAlign: "center" }}>
-                <Typography variant="body2">© 2024 Horizon. All rights reserved.</Typography>
+                <Typography variant="body2">© 2024 Lovasoa Nantenaina . All rights reserved.</Typography>
                 <Box sx={{ mt: 1, display: "flex", justifyContent: "center", gap: 2 }}>
                     <Typography variant="body2">Privacy Policy</Typography>
                     <Typography variant="body2">Terms of Service</Typography>

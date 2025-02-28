@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { motion } from "framer-motion";
-import heroImage from "../assets/Images/Tailand.jpg";
+import heroImage from "../assets/Images/Morondava.webp";
 import lagunaImage from "../assets/Images/Laguna.jpg";
 import phuketImage from "../assets/Images/Phucket.jpg";
 
@@ -11,7 +11,7 @@ export default function TravelHeroSection() {
             <Box
                 sx={{
                     height: "80vh",
-                    backgroundImage: `url(${heroImage})`,
+                    backgroundImage: `url(/assets/banner.png)`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     display: "flex",
@@ -22,14 +22,16 @@ export default function TravelHeroSection() {
                     padding: 4,
                     position: "relative",
                     borderRadius: 4,
+                    backdropFilter : "brightness(0.4)",
+                    zIndex: 1
                 }}
             >
                 <Box sx={{ maxWidth: "50%" }}>
                     <Typography variant="h3" fontWeight="bold">
-                        Journey with Happiness
+                        Voyagez avec le <span variant ="h5">Bonheur </span>
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 2 }}>
-                        Embark on a journey filled with joy and wonder! Discover new places, serene landscapes, and hidden gems. Let happiness guide your travels.
+                        Embarquez pour un voyage rempli de joie et de merveilles ! Découvrez de nouveaux endroits, des paysages sereins et des trésors cachés. Laissez le bonheur guider vos voyages.
                     </Typography>
                     <Button
                         variant="contained"

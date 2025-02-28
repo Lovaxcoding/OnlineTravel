@@ -6,6 +6,7 @@ import StatsCard from "../admin/StatCard";
 import ReservationList from "../Reservation/ReservationList.jsx";
 import ReservationDelete from "../Reservation/ReservationForm";
 import Statistics from "../Statistics/Statistics.jsx";
+import UserList from "../User/UserList.jsx";
 
 const Dashboard = () => {
     const [open, setOpen] = useState(true);
@@ -25,7 +26,7 @@ const Dashboard = () => {
                     <Routes>
                         <Route path="/statistics" element={<Statistics />} />
                         <Route path="/reservations" element={<ReservationList />} />
-                        <Route path="/deletion" element={<ReservationDelete />} />
+                        <Route path="/user" element={<UserList />} />
                     </Routes>
                 </Container>
             </Box>

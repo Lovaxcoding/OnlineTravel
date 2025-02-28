@@ -21,6 +21,7 @@ public class Destination {
     private String description;
     private double price;
     private int duration_days;
+    private String background_image_path;
     @OneToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
