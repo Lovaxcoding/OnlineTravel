@@ -6,7 +6,7 @@ import { AccountCircle } from "@mui/icons-material";
 import { AuthContext } from "../Context/AuthContext.jsx";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { ProfileToggleDrawer } from './ProfileToggleDrawer'; // Le composant Drawer
+import ProfileToggleDrawer from "./ProfileToggleDrawer.jsx";
 
 const Navbar = () => {
     const [darkMode, setDarkMode] = useState(false);

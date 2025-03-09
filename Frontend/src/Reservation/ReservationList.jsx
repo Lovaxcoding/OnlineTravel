@@ -15,15 +15,20 @@ import {
     Button,
     TablePagination,
     TextField,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    CircularProgress,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { getReservations, deleteReservation, updateReservationStatus } from "../services/apiReservation.jsx"; // Ajoutez la fonction pour mettre à jour le status
+import { getReservations, deleteReservation, updateReservationStatus } from "../services/apiReservation.jsx";
 
-function Row({ row, onDelete, onStatusChange }) {
+function Row({ row, onDelete, onStatusChange, onView, onEdit }) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -39,29 +44,29 @@ function Row({ row, onDelete, onStatusChange }) {
                 <TableCell align="right">{row.prixTotal}€</TableCell>
                 <TableCell align="center">
                     <Button
-                        variant={row.status === 1 ? "contained" : "outlined"} // "confirmé" si 1, "en attente" si 0
-                        color={row.status === 1 ? "success" : "warning"} // Vert pour "confirmé", Jaune pour "en attente"
+                        variant={row.status === 1 ? "contained" : "outlined"}
+                        color={row.status === 1 ? "success" : "warning"}
                         onClick={() => onStatusChange(row.idReservation)}
                     >
-                        {row.status === 1 ? "Confirmé" : "En attente"} {/* Affichage du texte */}
+                        {row.status === 1 ? "Confirmé" : "En attente"}
                     </Button>
                 </TableCell>
                 <TableCell align="right">
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => alert("Afficher les détails de la réservation")}
+                        onClick={() => onView(row)}
                         startIcon={<VisibilityIcon />}
                     >
-                        {/* Afficher */}
+                        Afficher
                     </Button>
                     <Button
                         variant="contained"
                         color="secondary"
-                        onClick={() => alert("Éditer la réservation")}
+                        onClick={() => onEdit(row)}
                         startIcon={<EditIcon />}
                     >
-                        {/* Éditer */}
+                        Éditer
                     </Button>
                     <Button
                         variant="contained"
@@ -69,7 +74,7 @@ function Row({ row, onDelete, onStatusChange }) {
                         onClick={() => onDelete(row.idReservation)}
                         startIcon={<DeleteIcon />}
                     >
-                        {/* Supprimer */}
+                        Supprimer
                     </Button>
                 </TableCell>
                 <TableCell>
@@ -105,41 +110,51 @@ Row.propTypes = {
         dateDepart: PropTypes.string.isRequired,
         dateRetour: PropTypes.string.isRequired,
         prixTotal: PropTypes.number.isRequired,
-        status: PropTypes.number.isRequired, // Changement de string à number pour correspondre à 0 ou 1
+        status: PropTypes.number.isRequired,
     }).isRequired,
     onDelete: PropTypes.func.isRequired,
     onStatusChange: PropTypes.func.isRequired,
+    onView: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
 };
 
 export default function ReservationList() {
     const [reservations, setReservations] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [searchQuery, setSearchQuery] = useState(""); // Utilisation de searchQuery ici
+    const [searchQuery, setSearchQuery] = useState("");
+    const [openDialog, setOpenDialog] = useState(false);
+    const [openEditDialog, setOpenEditDialog] = useState(false);
+    const [selectedReservation, setSelectedReservation] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchReservations();
     }, []);
 
     const fetchReservations = async () => {
+        setLoading(true);
         try {
             const response = await getReservations();
             setReservations(response.data);
         } catch (error) {
             console.error("Erreur lors de la récupération des réservations:", error);
         }
+        setLoading(false);
     };
 
     const handleDelete = async (id) => {
+        setLoading(true);
         await deleteReservation(id);
-        fetchReservations(); // Mise à jour après suppression
+        fetchReservations();
     };
 
     const handleStatusChange = async (id) => {
         const updatedReservation = reservations.find((res) => res.idReservation === id);
         const newStatus = updatedReservation.status === 0 ? 1 : 0;
+        setLoading(true);
         await updateReservationStatus(id, newStatus);
-        fetchReservations(); // Mise à jour après modification
+        fetchReservations();
     };
 
     const handleSearchChange = (e) => {
@@ -147,9 +162,7 @@ export default function ReservationList() {
     };
 
     const filteredReservations = reservations.filter((reservation) => {
-        return (
-            reservation.destination.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        return reservation.destination.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
     const handleChangePage = (event, newPage) => {
@@ -158,17 +171,36 @@ export default function ReservationList() {
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0); // Réinitialise à la première page après changement du nombre de lignes par page
+        setPage(0);
+    };
+
+    const handleView = (row) => {
+        setSelectedReservation(row);
+        setOpenDialog(true);
+    };
+
+    const handleEdit = (row) => {
+        setSelectedReservation(row);
+        setOpenEditDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        setSelectedReservation(null);
+    };
+
+    const handleCloseEditDialog = () => {
+        setOpenEditDialog(false);
+        setSelectedReservation(null);
     };
 
     return (
         <Box>
-            {/* Champ de recherche */}
             <TextField
                 label="Rechercher"
                 variant="outlined"
                 fullWidth
-                value={searchQuery} // Utilisation de searchQuery ici
+                value={searchQuery}
                 onChange={handleSearchChange}
                 sx={{ marginBottom: 2 }}
             />
@@ -188,16 +220,26 @@ export default function ReservationList() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredReservations
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((res) => (
-                                <Row
-                                    key={res.idReservation}
-                                    row={res}
-                                    onDelete={handleDelete}
-                                    onStatusChange={handleStatusChange}
-                                />
-                            ))}
+                        {loading ? (
+                            <TableRow>
+                                <TableCell colSpan={8} align="center">
+                                    <CircularProgress />
+                                </TableCell>
+                            </TableRow>
+                        ) : (
+                            filteredReservations
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((res) => (
+                                    <Row
+                                        key={res.idReservation}
+                                        row={res}
+                                        onDelete={handleDelete}
+                                        onStatusChange={handleStatusChange}
+                                        onView={handleView}
+                                        onEdit={handleEdit}
+                                    />
+                                ))
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -212,6 +254,54 @@ export default function ReservationList() {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+
+            {/* Dialog for Viewing Reservation */}
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+                <DialogTitle>Détails de la réservation</DialogTitle>
+                <DialogContent>
+                    <Typography>Email: {selectedReservation?.email}</Typography>
+                    <Typography>Destination: {selectedReservation?.destination}</Typography>
+                    <Typography>Date de réservation: {selectedReservation?.dateReservation}</Typography>
+                    <Typography>Date de départ: {selectedReservation?.dateDepart}</Typography>
+                    <Typography>Date de retour: {selectedReservation?.dateRetour}</Typography>
+                    <Typography>Prix: {selectedReservation?.prixTotal}€</Typography>
+                    <Typography>Status: {selectedReservation?.status === 1 ? "Confirmé" : "En attente"}</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Fermer
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            {/* Dialog for Editing Reservation */}
+            <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
+                <DialogTitle>Modifier la réservation</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        label="Destination"
+                        variant="outlined"
+                        fullWidth
+                        value={selectedReservation?.destination || ""}
+                        // Ajoutez un champ pour mettre à jour la réservation
+                    />
+                    {/* Autres champs d'édition */}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseEditDialog} color="secondary">
+                        Annuler
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            // Implémentation de la mise à jour
+                            handleCloseEditDialog();
+                        }}
+                        color="primary"
+                    >
+                        Sauvegarder
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
