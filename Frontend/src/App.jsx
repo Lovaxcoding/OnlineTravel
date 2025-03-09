@@ -17,7 +17,7 @@ import Footer from "./Footer/Footer.jsx";
 import ReservationForm from "./Reservation/ReservationForm.jsx";
 import LoginFormAdmin from "./pages/LoginFormAdmin.jsx";
 import LoginPageUser from "./pages/LoginPageUser.jsx";
-import Profile from "./Navigation/Profile.jsx";
+import Profile from "./Navigation/ProfileToggleDrawer.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 const App = () => {
