@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -24,14 +23,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-            return userRepository.findById(id).orElse(null);
-
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable."));
     }
 
     @Override
     public User createUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("L'email est déjà utilisé.");
+        }
         return userRepository.save(user);
     }
+
 
     @Override
     public User updateUser(Long id, User user) {

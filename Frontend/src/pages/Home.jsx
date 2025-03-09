@@ -1,33 +1,25 @@
+import React, { useState } from "react";
 import HeroSection from "../HeroSection/HeroSection";
 import TravelHeroSection from "../TravelSection/TravelHeroSection.jsx";
 import AboutUs from "../AboutOnlineTravel/AboutUs.jsx";
-import UserList from "../User/UserList.jsx";
-import ReservationList from "../Reservation/ReservationList.jsx";
 import ReservationForm from "../Reservation/ReservationForm.jsx";
-import {useState} from "react";
-import {Container} from "@mui/material";
-import Typography from "@mui/material/Typography";
 import Destinations from "../Destination/Destinations.jsx";
-import OfferCard from "../Reservation/TravelOffers.jsx";
 import TravelOffers from "../Reservation/TravelOffers.jsx";
+import Navbar from "../Navigation/Navbar.jsx";
+import Footer from "../Footer/Footer.jsx";
 
 export default function Home() {
     const [refresh, setRefresh] = useState(false);
+    console.log('Home component loaded');
     return (
         <div>
+            <Navbar />
             <HeroSection />
             <Destinations />
             <AboutUs />
             <TravelOffers />
             <TravelHeroSection />
-            <ReservationForm />
-            {/*<UserList />*/}
-            {/*<Container>*/}
-            {/*    <Typography variant="h4" align="center">Gestion des Réservations</Typography>*/}
-            {/*    <ReservationForm refresh={() => setRefresh(!refresh)} />*/}
-            {/*    <ReservationList key={refresh} />*/}
-            {/*</Container>*/}
-
+            <Footer />
         </div>
     );
 }

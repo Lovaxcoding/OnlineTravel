@@ -5,7 +5,7 @@ import SignupSection from "./SignupSection.jsx";
 
 export default function Footer() {
     return (
-        <Box sx={{ height: "auto", backgroundColor: "#0A0A0A", color: "white", py: 6, px: { xs: 2, md: 6 } }}>
+        <Box sx={{ height: "auto", backgroundColor: "#2d7f96", color: "white", py: 6, px: { xs: 2, md: 6 } }}>
             <SignupSection />
             <Grid container spacing={4}>
                 {/* Section Logo et Description */}

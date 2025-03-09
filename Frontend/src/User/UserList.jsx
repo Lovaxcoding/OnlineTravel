@@ -11,7 +11,7 @@ import {
     Typography,
     Button,
     TablePagination,
-    TextField,
+    TextField, Divider,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
@@ -81,8 +81,9 @@ const UserList = () => {
     };
 
     return (
-        <div className="p-12">
-            <Typography variant="h4" gutterBottom className="text-center text-gray-700">
+
+        <div className="p-12 " >
+            <Typography sx={{marginTop: "2rem"}} variant="h4" gutterBottom className="text-center text-gray-700">
                 Liste des utilisateurs
             </Typography>
 
@@ -104,6 +105,8 @@ const UserList = () => {
                             <TableCell className="font-bold">ID</TableCell>
                             <TableCell className="font-bold">Nom</TableCell>
                             <TableCell className="font-bold">Email</TableCell>
+                            <TableCell className="font-bold">Rôle</TableCell>
+                            <TableCell className="font-bold">Téléphone</TableCell>
                             <TableCell align="right" className="font-bold">Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -115,6 +118,8 @@ const UserList = () => {
                                     <TableCell>{user.id}</TableCell>
                                     <TableCell>{user.username}</TableCell>
                                     <TableCell>{user.email}</TableCell>
+                                    <TableCell>{user.role}</TableCell> {/* Affichage du rôle */}
+                                    <TableCell>{user.telephone}</TableCell> {/* Affichage du téléphone */}
                                     <TableCell align="right">
                                         <Button
                                             variant="contained"

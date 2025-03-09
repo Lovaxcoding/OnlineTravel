@@ -1,25 +1,53 @@
 package com.example.OnlineTravel.models;
-import com.example.OnlineTravel.models.User;
 
-
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 
-@Entity
 @Getter
+@Entity
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_reservation")
     private Long idReservation;
 
+    @JsonProperty("destination")  // Assurez-vous que la propriété JSON correspond à "destination"
     private String destination;
+
+    @JsonProperty("dateDepart")  // Correspond à "date_depart" dans le JSON, mais en camelCase ici
     private LocalDate dateDepart;
+
+    @JsonProperty("dateRetour")  // Correspond à "date_retour" dans le JSON, mais en camelCase ici
     private LocalDate dateRetour;
+
+    @JsonProperty("dateReservation")  // Vous pouvez utiliser "date_reservation" en camelCase si vous envoyez en camelCase
+    private LocalDate dateReservation;
+
+    @JsonProperty("nombrePersonnes")  // Correspond à "nombre_personnes" dans le JSON, mais en camelCase ici
+    private int nombrePersonnes;
+
+    @JsonProperty("prixTotal")  // Correspond à "prix_total" dans le JSON, mais en camelCase ici
+    private double prixTotal;
+
+    @JsonProperty("status")  // Assurez-vous que cela correspond à ce que vous envoyez
+    @Column(name = "status", nullable = false)
+    private int status = 0;
+
+    @JsonProperty("version")  // Ajoutez cette annotation si vous envoyez la version
+    @Version
+    private Integer version;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference  // Cette annotation permet de gérer les références circulaires avec User
+    private User user;
 
     @Override
     public String toString() {
@@ -30,71 +58,7 @@ public class Reservation {
                 ", dateRetour=" + dateRetour +
                 ", nombrePersonnes=" + nombrePersonnes +
                 ", prixTotal=" + prixTotal +
-                ", user=" + user +
+                ", user=" + (user != null ? user.getId() : "null") +
                 '}';
     }
-
-    public double getPrixTotal() {
-        return prixTotal;
-    }
-
-    public void setPrixTotal(double prixTotal) {
-        this.prixTotal = prixTotal;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public int getNombrePersonnes() {
-        return nombrePersonnes;
-    }
-
-    public void setNombrePersonnes(int nombrePersonnes) {
-        this.nombrePersonnes = nombrePersonnes;
-    }
-
-    public LocalDate getDateRetour() {
-        return dateRetour;
-    }
-
-    public void setDateRetour(LocalDate dateRetour) {
-        this.dateRetour = dateRetour;
-    }
-
-    public LocalDate getDateDepart() {
-        return dateDepart;
-    }
-
-    public void setDateDepart(LocalDate dateDepart) {
-        this.dateDepart = dateDepart;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public Long getIdReservation() {
-        return idReservation;
-    }
-
-    public void setIdReservation(Long idReservation) {
-        this.idReservation = idReservation;
-    }
-
-    private int nombrePersonnes;
-    private double prixTotal;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
 }

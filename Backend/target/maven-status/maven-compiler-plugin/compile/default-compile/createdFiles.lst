@@ -1,0 +1,16 @@
+com\example\OnlineTravel\models\Destination.class
+com\example\OnlineTravel\models\Hotel.class
+com\example\OnlineTravel\services\HotelService.class
+com\example\OnlineTravel\services\DestinationService.class
+com\example\OnlineTravel\services\Impl\DestinationServiceImpl.class
+com\example\OnlineTravel\controllers\HotelController.class
+com\example\OnlineTravel\services\Impl\HotelServiceImpl.class
+com\example\OnlineTravel\controllers\DestinationController.class
+com\example\OnlineTravel\repositories\DestinationRepository.class
+com\example\OnlineTravel\services\Impl\UserServiceImpl.class
+com\example\OnlineTravel\services\CustomUserDetailsService.class
+com\example\OnlineTravel\controllers\AuthController.class
+com\example\OnlineTravel\models\Role.class
+com\example\OnlineTravel\repositories\HotelRepository.class
+com\example\OnlineTravel\services\UserService.class
+com\example\OnlineTravel\controllers\UserController.class

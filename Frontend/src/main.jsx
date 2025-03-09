@@ -1,26 +1,11 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./Navigation/Navbar.jsx";
-import HeroSection from "./HeroSection/HeroSection.jsx";
-import TravelHeroSection from "./TravelSection/TravelHeroSection.jsx";
-import Footer from "./Footer/Footer.jsx";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Dashboard from "./pages/Dashboard";
+import React from 'react';
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App'; // Assurez-vous que le chemin est correct
 
-createRoot(document.getElementById("root")).render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
     <StrictMode>
-        <Router>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/dashboard/*" element={<Dashboard />} />
-            </Routes>
-            <Footer />
-        </Router>
+        <App />
     </StrictMode>
 );

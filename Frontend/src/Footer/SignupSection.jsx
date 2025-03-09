@@ -2,7 +2,7 @@ import { Avatar, Button, Typography, Box } from "@mui/material";
 
 export default function SignupSection() {
     return (
-        <Box sx={{ color: "white", py: 8, textAlign: "center" }}>
+        <Box sx={{ color: "whitesmoke", py: 8,  textAlign: "center" }}>
             {/* Section principale */}
             <Typography
                 variant="h3"
@@ -22,7 +22,7 @@ export default function SignupSection() {
                     <Avatar src="/assets/images/user2.jpeg" alt="User 2" />
                     <Avatar src="/assets/images/user3.jpeg" alt="User 3" />
                 </Box>
-                <Typography color="gray">295+ personnes ont déja rejoins</Typography>
+                <Typography color="whitesmoke">295+ personnes ont déja rejoins</Typography>
             </Box>
 
             <Button

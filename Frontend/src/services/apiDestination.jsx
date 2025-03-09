@@ -39,3 +39,15 @@ export const updateDestination = async (id, destination) => {
         return null;
     }
 };
+
+export const getDestinationById = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/${id}`);
+        return response.data;
+
+    }
+    catch (error) {
+        console.error("Erreur lors de la récuperation " , error);
+        return null;
+    }
+}
